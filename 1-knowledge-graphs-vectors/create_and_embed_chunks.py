@@ -25,6 +25,11 @@ London, governed by 33 local authorities and the Greater London Authority.
 """
 
 # 1. Split text into chunks
-
+text_splitter = FixedSizeSplitter(chunk_size=100, chunk_overlap=10)
+chunks = asyncio.run(text_splitter.run(text=text)).chunks
+print(chunks)
 
 # 2. Create embeddings from chunks
+embedder = OpenAIEmbeddings(model="text-embedding-3-large")
+for chunk in chunks[:1]:
+    print(embedder.embed_query(chunk))
